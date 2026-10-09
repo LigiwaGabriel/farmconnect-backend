@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const favoriteRoutes = require("./routes/favoriteRoutes");
 
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
@@ -44,6 +45,7 @@ app.use("/api/inquiries", inquiryRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found." });
