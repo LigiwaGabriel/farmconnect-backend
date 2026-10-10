@@ -191,3 +191,34 @@ Product image uploads use Multer in `middleware/uploadMiddleware.js`. Images are
 - `GET /api/admin/products`: List all products.
 - `GET /api/admin/orders`: List all orders.
 - `PUT /api/admin/users/:id/status`: Activate or deactivate a user.
+
+## New Features (Student Additions)
+
+### 1. Favorites saved in the database
+- `GET /api/favorites`: Buyer lists saved products. Protected.
+- `POST /api/favorites/:productId`: Buyer saves a product. Protected.
+- `DELETE /api/favorites/:productId`: Buyer removes a favorite. Protected.
+
+### 2. Buyer cancels a pending order
+- `PUT /api/orders/:id/cancel`: Buyer cancels their own order. Only orders with status `pending` can be cancelled. Protected.
+
+### 3. Product ratings and reviews
+- `GET /api/reviews/product/:productId`: Public. Returns reviews and an average rating.
+- `POST /api/reviews/product/:productId`: Buyer adds or updates their review (rating 1 to 5, optional comment). Each buyer has one review per product. Protected.
+
+The `reviews` table is defined in `database/schema.sql`, and sample reviews are in `database/seed.sql`.
+
+## Database Setup Without the Command Line
+
+If the `mysql` command is not available (for example on Windows), use MySQL Workbench:
+
+1. Connect to your local MySQL server.
+2. Open `database/schema.sql` with **File > Open SQL Script** and run it.
+3. Open `database/seed.sql` and run it.
+
+Warning: `schema.sql` drops and recreates all tables, so only run it on a fresh setup.
+
+## Setup Notes
+
+- If your database password contains `#`, wrap it in quotes in `.env`, for example `DB_PASSWORD="#mypassword"`. Without quotes, everything after `#` is treated as a comment and the login fails with "using password: NO".
+- Never commit `.env` or `node_modules`.
