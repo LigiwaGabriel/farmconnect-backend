@@ -3,6 +3,7 @@ USE farmconnect;
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE audit_logs;
 TRUNCATE TABLE favorites;
+TRUNCATE TABLE reviews;
 TRUNCATE TABLE inquiries;
 TRUNCATE TABLE orders;
 TRUNCATE TABLE products;
