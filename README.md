@@ -222,3 +222,4 @@ Warning: `schema.sql` drops and recreates all tables, so only run it on a fresh 
 
 - If your database password contains `#`, wrap it in quotes in `.env`, for example `DB_PASSWORD="#mypassword"`. Without quotes, everything after `#` is treated as a comment and the login fails with "using password: NO".
 - Never commit `.env` or `node_modules`.
+To add the reviews table to an existing database without losing data, run `database/migrations/001_add_reviews.sql`.
