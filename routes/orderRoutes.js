@@ -3,7 +3,8 @@ const {
   createOrder,
   getMyOrders,
   getFarmerOrders,
-  updateOrderStatus
+  updateOrderStatus,
+  cancelOrder
 } = require("../controllers/orderController");
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
@@ -15,5 +16,6 @@ router.post("/", authMiddleware, roleMiddleware("buyer"), asyncHandler(createOrd
 router.get("/my-orders", authMiddleware, roleMiddleware("buyer"), asyncHandler(getMyOrders));
 router.get("/farmer", authMiddleware, roleMiddleware("farmer"), asyncHandler(getFarmerOrders));
 router.put("/:id/status", authMiddleware, roleMiddleware("farmer", "admin"), asyncHandler(updateOrderStatus));
+router.put("/:id/cancel", authMiddleware, roleMiddleware("buyer"), asyncHandler(cancelOrder));
 
 module.exports = router;

@@ -85,4 +85,26 @@ async function updateOrderStatus(req, res) {
   res.json({ message: "Order status updated." });
 }
 
-module.exports = { createOrder, getMyOrders, getFarmerOrders, updateOrderStatus };
+async function cancelOrder(req, res) {
+  const [orders] = await pool.query("SELECT * FROM orders WHERE id = ?", [req.params.id]);
+  const order = orders[0];
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found." });
+  }
+
+  if (order.buyer_id !== req.user.id) {
+    return res.status(403).json({ message: "You can only cancel your own orders." });
+  }
+
+  if (order.status !== "pending") {
+    return res.status(400).json({ message: "Only pending orders can be cancelled." });
+  }
+
+  await pool.query(
+    "UPDATE orders SET status = 'cancelled' WHERE id = ? AND status = 'pending'",
+    [req.params.id]
+  );
+  res.json({ message: "Order cancelled." });
+}
+module.exports = { createOrder, getMyOrders, getFarmerOrders, updateOrderStatus, cancelOrder };
